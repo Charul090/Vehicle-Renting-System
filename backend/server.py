@@ -32,11 +32,23 @@ def userRegister():
 
     cur=mysql.connection.cursor()
 
-    cur.execute(''' INSERT INTO user(first_name,last_name,username,password,admin) VALUES("%s","%s","%s","%s",False); ''' %(first_name,last_name,username,password))
-    mysql.connection.commit()
-    cur.close()
+    cur.execute(''' SELECT username from user ''')
+    result=cur.fetchall()
 
-    return json.dumps({"message":"User Registration is successfully"})
+    flag=False
+
+    for x in result:
+        if username == x[0]:
+            flag=True
+
+    if flag:
+        return json.dumps({"message":"Username Already Exists","error":True})
+    else:
+        cur.execute(''' INSERT INTO user(first_name,last_name,username,password,admin) VALUES("%s","%s","%s","%s",False); ''' %(first_name,last_name,username,password))
+        mysql.connection.commit()
+        cur.close()
+
+        return json.dumps({"message":"User Registration is successfull","error":False})
 
 #User Login Function
 @app.route("/userlogin")
