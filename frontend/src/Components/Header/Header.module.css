@@ -1,0 +1,14 @@
+.container1{
+    margin:0 auto;
+    width:24%;
+    text-align: center;
+    padding:5px;
+}
+
+
+.container2{
+    width:60%;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-around;
+}
