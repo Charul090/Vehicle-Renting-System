@@ -1,7 +1,6 @@
 CREATE TABLE car(id INT NOT NULL,
     car_name varchar(50),
     car_make varchar(50),
-    car_model varchar(50),
     car_vin VARCHAR(50),
     color varchar(50),
     current_location_id int,PRIMARY KEY(id),

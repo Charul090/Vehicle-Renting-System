@@ -142,3 +142,28 @@ def authCheck():
         })
 
     
+#############################
+
+
+@app.route("/car/basic")
+def getBasicCarData():
+
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT c.id,c.car_name,c.car_make,c.car_vin,l.id,l.location FROM car as c LEFT JOIN location as l ON c.current_location_id=l.id;''')
+
+    result=cur.fetchall()
+
+    data=[]
+
+    for x in result:
+        obj={
+            "car_id":x[0],
+            "car_model":x[1],
+            "car_make":x[2],
+            "car_vin":x[3],
+            "location_id":x[4],
+            "location":x[5]
+        }
+        data.append(obj)
+
+    return json.dumps({"data":data})
