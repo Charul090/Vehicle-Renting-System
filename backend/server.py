@@ -10,7 +10,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '@TorresDash09'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -58,18 +58,22 @@ def userLogin():
 
     cur=mysql.connection.cursor()
 
-    cur.execute(''' SELECT username,password FROM user ''')
+    cur.execute(''' SELECT username,password,id FROM user ''')
     result=cur.fetchall()
 
     flag=False
 
+    user_id=None
+
     for x in result:
         if x[0] == username:
             if x[1] == password:
+                user_id=x[2]
                 flag=True
     
     if flag:
-        payload={
+        payload={   
+                    "user_id":user_id,
                     "username":username,
                     "status":"logged-in",
                     "time":time.time()+172800
@@ -92,19 +96,22 @@ def adminLogin():
 
     cur=mysql.connection.cursor()
 
-    cur.execute(''' SELECT username,password,admin FROM user ''')
+    cur.execute(''' SELECT username,password,admin,id FROM user ''')
     result=cur.fetchall()
 
     flag=False
+    user_id=None
 
     for x in result:
         if x[0] == username:
             if x[1] == password:
                 if x[2] == 1:
+                    user_id=x[3]
                     flag=True
     
     if flag:
         payload={
+                    "user_id":user_id,
                     "username":username,
                     "status":"logged-in",
                     "time":time.time()+172800
@@ -120,7 +127,7 @@ def adminLogin():
 
 
 #Function for Authentication of token
-@app.route("/auth_check")
+@app.route("/auth_check",methods=["POST"])
 def authCheck():
     token=request.json["token"]
 
@@ -190,3 +197,27 @@ def getLocationData():
 
     return json.dumps({"data":data})
 
+
+##Function to Update user's travel information undertaken
+@app.route("/user/updateride",methods=["POST"])
+def updateRide():
+    token=request.json["token"]
+    car_id=request.json["car_id"]
+    distance=request.json["distance"]
+    time=request.json["time"]
+    start=request.json["start"]
+    destination=request.json["destination"]
+
+
+    cost=(int(distance)//8)*76
+
+    key="masai"
+    data=jwt.decode(token,key)
+    user_id=data["user_id"]
+
+    cur=mysql.connection.cursor()
+    cur.execute(''' INSERT INTO user_car(user_id,car_id,distance,cost,time,start,destination) VALUES("%s","%s","%s","%s","%s","%s","%s"); ''' %(user_id,car_id,distance,cost,time,start,destination))
+    mysql.connection.commit()
+    cur.close()
+
+    return json.dumps({"status":True,"message":"Your Ride has completed Successfully"})
