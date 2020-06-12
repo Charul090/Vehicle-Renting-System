@@ -2,7 +2,8 @@ import { Ride_Query, Ride_Successfull, Ride_Failure } from "./actiontypes.js"
 
 const initialState = {
     status: false,
-    message: ""
+    message: "",
+    info:{}
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -15,7 +16,8 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 status:payload.status,
-                message:payload.message
+                message:payload.message,
+                info:payload.info
             }
         
         case Ride_Failure:

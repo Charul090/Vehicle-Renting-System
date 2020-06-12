@@ -7,6 +7,7 @@ import { Container, Row, Col, Card, Form, ListGroup, ListGroupItem, Button } fro
 import { distance } from "./distance.js"
 import DateTime from "datetime-js"
 import { Send_Ride_Query } from "../../Redux/ride/action.js"
+import Confirmation from '../Confirmation/Confirmation.jsx'
 
 export default function Home() {
 
@@ -81,7 +82,9 @@ export default function Home() {
 
     if (status) {
         return (
-            <h1>Done</h1>
+            <>
+                <Confirmation />
+            </>
         )
     }
     else {

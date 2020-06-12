@@ -198,6 +198,25 @@ def getLocationData():
     return json.dumps({"data":data})
 
 
+#Updating car information after ride
+def updateCarInfo(car_id,distance,destination):
+    cur=mysql.connection.cursor()
+
+    cur.execute(''' SELECT total_distance FROM car WHERE id="%d" ''' %(car_id))
+    result=cur.fetchall()
+
+    total_distance=int(result[0][0])+distance
+
+    cur.execute(''' UPDATE car SET total_distance="%d" WHERE id="%d"; ''' %(total_distance,car_id))
+    mysql.connection.commit()
+
+    cur.execute(''' UPDATE car SET current_location_id="%d" WHERE id="%d"; ''' %(destination,car_id))
+    mysql.connection.commit()
+    
+    cur.close()
+
+
+
 ##Function to Update user's travel information undertaken
 @app.route("/user/updateride",methods=["POST"])
 def updateRide():
@@ -218,6 +237,38 @@ def updateRide():
     cur=mysql.connection.cursor()
     cur.execute(''' INSERT INTO user_car(user_id,car_id,distance,cost,time,start,destination) VALUES("%s","%s","%s","%s","%s","%s","%s"); ''' %(user_id,car_id,distance,cost,time,start,destination))
     mysql.connection.commit()
+
+    updateCarInfo(car_id,int(distance),int(destination))
+
+    cur.execute(''' SELECT car_make,car_name FROM car WHERE id="%d" ;''' %(int(car_id)))
+    result=cur.fetchall()
+
+    for x in result:
+        car_make=x[0]
+        car_name=x[1]
+    
+
+    cur.execute(''' SELECT location FROM location WHERE id="%d"; ''' %(int(start)))
+    result=cur.fetchall()
+
+    start=result[0][0]
+
+    cur.execute(''' SELECT location FROM location WHERE id="%d"; ''' %(int(destination)))
+    result=cur.fetchall()
+
     cur.close()
 
-    return json.dumps({"status":True,"message":"Your Ride has completed Successfully"})
+    destination=result[0][0]
+
+    info={
+        "user_name":data["username"],
+        "car_make":car_make,
+        "car_name":car_name,
+        "distance":distance,
+        "cost":cost,
+        "time":time,
+        "start":start,
+        "destination":destination
+    }
+
+    return json.dumps({"status":True,"message":"Your Ride has completed Successfully","info":info})
