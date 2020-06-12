@@ -22,7 +22,7 @@ const Failure_Login=(data)=>{
 }
 
 
-const Query=(info)=>{
+const User_Query=(info)=>{
     return dispatch=>{
         dispatch(Send_Query())
         return axios({
@@ -46,4 +46,28 @@ const Query=(info)=>{
     }
 }
 
-export {Query}
+const Admin_Query=(info)=>{
+    return dispatch=>{
+        dispatch(Send_Query())
+        return axios({
+            method:"post",
+            url:"http://127.0.0.1:5000/adminlogin",
+            data:info,
+            headers:{
+                "Content-type": "application/json; charset=utf-8"
+            }
+        })
+        .then((res)=>res.data)
+        .then((data)=>{
+            if(data.error){
+                dispatch(Failure_Login(data))
+            }
+            else{
+                dispatch(Successfull_Login(data))
+            }
+        })
+        .catch((err)=>console.log(err))
+    }
+}
+
+export {User_Query,Admin_Query}

@@ -5,7 +5,8 @@ const initialState = {
     request:false,
     message:"",
     logged_in:false,
-    token:""
+    token:"",
+    admin:false
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -15,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
         return {
             ...state,
             request:true,
-            
+            admin:false
         }
 
     case Login_Successfull:
@@ -23,7 +24,8 @@ export default (state = initialState, { type, payload }) => {
             ...state,
             message:payload.message,
             logged_in:true,
-            token:payload.token
+            token:payload.token,
+            admin:payload.admin
         }
     
     case Login_Failure:
@@ -31,7 +33,8 @@ export default (state = initialState, { type, payload }) => {
             ...state,
             message:payload.message,
             logged_in:false,
-            token:""
+            token:"",
+            admin:false
         }
 
     default:

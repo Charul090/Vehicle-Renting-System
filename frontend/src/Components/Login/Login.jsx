@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import {Container, Row, Col, Card, Form, Button} from "react-bootstrap"
 import {useDispatch,useSelector} from "react-redux"
-import {Query} from "../../Redux/login/action.js"
+import {User_Query,Admin_Query} from "../../Redux/login/action.js"
 
-export default function Login() {
+export default function Login({user}) {
 
     const [username,setUsername]=useState("")
     const [password,setPassword]=useState("")
@@ -29,7 +29,14 @@ export default function Login() {
                 password
             }
 
-            dispatch(Query(info))
+            if(user === "admin"){
+                dispatch(Admin_Query(info))
+            }
+            else{
+                dispatch(User_Query(info))
+            }
+
+            
         }
         else{
             setWarning(true)

@@ -79,7 +79,7 @@ def userLogin():
 
         encode=jwt.encode(payload,key)
 
-        return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False})
+        return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False,"admin":False})
     else:
         return json.dumps({"message":"Username or password is incorrect","error":True})
 
@@ -114,7 +114,7 @@ def adminLogin():
 
         encode=jwt.encode(payload,key)
 
-        return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False})
+        return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False,"admin":True})
     else:
         return json.dumps({"message":"Login UnSuccessfull","error":True})
 
