@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Register from './Components/Register/Register';
+import Routes from './Routes/Routes';
 
 function App() {
   return (
     <div className="App">
-      <Register />
+      <Routes />
     </div>
   );
 }

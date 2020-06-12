@@ -51,7 +51,7 @@ def userRegister():
         return json.dumps({"message":"User Registration is successfull","error":False})
 
 #User Login Function
-@app.route("/userlogin")
+@app.route("/userlogin",methods=["POST"])
 def userLogin():
     username=request.json["username"]
     password=request.json["password"]
@@ -81,11 +81,11 @@ def userLogin():
 
         return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False})
     else:
-        return json.dumps({"message":"Login UnSuccessfull","error":True})
+        return json.dumps({"message":"Username or password is incorrect","error":True})
 
 
 #Admin Login function
-@app.route("/adminlogin")
+@app.route("/adminlogin",methods=["POST"])
 def adminLogin():
     username=request.json["username"]
     password=request.json["password"]

@@ -46,8 +46,8 @@ export default function Register() {
     return (
         <Container>
             <Row className="justify-content-center mt-5">
-                <Col xs={12} sm={12} md={6}>
-                    <Card className="p-3 bg-light">
+                <Col xs={12} sm={11} md={8} lg={6}>
+                    <Card className="p-3">
                         <Card.Body>
                             <p className="text-danger">{warning?warning_message:error?message:null}</p>
                             <p className="text-success">{!error && message && !warning !== ""?message:null}</p>
