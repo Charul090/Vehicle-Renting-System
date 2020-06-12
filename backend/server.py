@@ -167,3 +167,25 @@ def getBasicCarData():
         data.append(obj)
 
     return json.dumps({"data":data})
+
+
+@app.route("/location")
+def getLocationData():
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT * FROM location; ''')
+
+    result=cur.fetchall()
+
+    data=[]
+
+    for x in result:
+        obj={
+            "location_id":x[0],
+            "location":x[1],
+            "latitude":x[2],
+            "longitutde":x[3]
+        }
+        data.append(obj)
+
+    return json.dumps({"data":data})
+
