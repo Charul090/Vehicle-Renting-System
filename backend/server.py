@@ -10,7 +10,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '@TorresDash09'
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -149,7 +149,7 @@ def authCheck():
 def getBasicCarData():
 
     cur=mysql.connection.cursor()
-    cur.execute(''' SELECT c.id,c.car_name,c.car_make,c.car_vin,l.id,l.location FROM car as c LEFT JOIN location as l ON c.current_location_id=l.id;''')
+    cur.execute(''' SELECT c.id,c.car_name,c.car_make,c.car_vin,l.id,l.location,c.color FROM car as c LEFT JOIN location as l ON c.current_location_id=l.id;''')
 
     result=cur.fetchall()
 
@@ -162,7 +162,8 @@ def getBasicCarData():
             "car_make":x[2],
             "car_vin":x[3],
             "location_id":x[4],
-            "location":x[5]
+            "location":x[5],
+            "car_color":x[6]
         }
         data.append(obj)
 
