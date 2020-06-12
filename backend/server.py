@@ -38,6 +38,7 @@ def userRegister():
 
     return json.dumps({"message":"User Registration is successfully"})
 
+#User Login Function
 @app.route("/userlogin")
 def userLogin():
     username=request.json["username"]
@@ -71,6 +72,42 @@ def userLogin():
         return json.dumps({"message":"Login UnSuccessfull","error":True})
 
 
+#Admin Login function
+@app.route("/adminlogin")
+def adminLogin():
+    username=request.json["username"]
+    password=request.json["password"]
+
+    cur=mysql.connection.cursor()
+
+    cur.execute(''' SELECT username,password,admin FROM user ''')
+    result=cur.fetchall()
+
+    flag=False
+
+    for x in result:
+        if x[0] == username:
+            if x[1] == password:
+                if x[2] == 1:
+                    flag=True
+    
+    if flag:
+        payload={
+                    "username":username,
+                    "status":"logged-in",
+                    "time":time.time()+172800
+                }
+
+        key="masai"
+
+        encode=jwt.encode(payload,key)
+
+        return json.dumps({"token":encode.decode(),"message":"Login Successfull","error":False})
+    else:
+        return json.dumps({"message":"Login UnSuccessfull","error":True})
+
+
+#Function for Authentication of token
 @app.route("/auth_check")
 def authCheck():
     token=request.json["token"]
