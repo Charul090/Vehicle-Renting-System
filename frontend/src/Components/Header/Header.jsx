@@ -1,10 +1,16 @@
 import React from 'react'
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 import styles from "./Header.module.css"
 
 export default function Header() {
+
+    let { logged_in } = useSelector(state => state.user)
+
+
+
     return (
-        <header className="py-3">
+        <header className="py-3 border-bottom border-light shadow-sm">
             <div className={styles.container1}>
                 <h3>
                     frEEway
@@ -12,14 +18,24 @@ export default function Header() {
             </div>
             <div className={styles.container2}>
                 <div>
-                    <Link to="/">Home</Link>
+                    <Link to="/">Rent Car</Link>
                 </div>
+                {logged_in ? null :
+                    <div>
+                        <Link to="/register">Register</Link>
+                    </div>
+                }
                 <div>
-                    <Link to="/userlogin">Login</Link>
+                    <Link to="/userlogin">
+                        {logged_in ? "Profile" : "Login"}
+                    </Link>
                 </div>
-                <div>
-                    <Link to="/adminlogin">Admin</Link>
-                </div>
+                {logged_in ? null :
+                    <div>
+                        <Link to="/adminlogin">Admin</Link>
+                    </div>
+                }
+
             </div>
         </header>
     )

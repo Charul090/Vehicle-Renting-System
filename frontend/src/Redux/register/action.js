@@ -1,6 +1,12 @@
-import {Send_Query,Query_Successfull,Query_Failure} from "./actiontypes.js"
+import {Send_Query,Query_Successfull,Query_Failure,Clear_Register} from "./actiontypes.js"
 import axios from "axios"
 
+
+const Clear_Register_State=()=>{
+    return {
+        type:Clear_Register
+    }
+}
 
 const Query_Sent=()=>{
     return {
@@ -47,4 +53,4 @@ const Register_Query=(info)=>{
     }
 }
 
-export {Register_Query}
+export {Register_Query,Clear_Register_State}

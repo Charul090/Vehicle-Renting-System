@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Container, Row, Col, Card, Form, Button} from "react-bootstrap"
-import {Register_Query} from "../../Redux/register/action.js"
+import {Register_Query,Clear_Register_State} from "../../Redux/register/action.js"
 import {useDispatch,useSelector} from "react-redux"
 
 export default function Register() {
@@ -43,14 +43,24 @@ export default function Register() {
         }
     }
 
+    useEffect(() => {
+        
+        return () => {
+            dispatch(Clear_Register_State())
+        }
+    }, [])
+
     return (
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col xs={12} sm={11} md={8} lg={6}>
                     <Card className="p-3">
                         <Card.Body>
-                            <p className="text-danger">{warning?warning_message:error?message:null}</p>
-                            <p className="text-success">{!error && message && !warning !== ""?message:null}</p>
+                            <h3 className="text-center">Sign up to Rent a car and travel</h3>
+                                    {warning?<p className="text-danger">{warning_message}</p>
+                                    :error?<p className="text-danger">{message}</p>
+                                    :null}
+                            {!error && message && !warning !== ""?<p className="text-success">{message}</p>:null}
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Form.Label>First Name</Form.Label>
@@ -68,7 +78,7 @@ export default function Register() {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" placeholder="Password" ></Form.Control>
                                 </Form.Group>
-                                <Button type="submit" variant="success" block>REGISTER</Button>
+                                <Button type="submit" variant="success" block>Sign Up</Button>
                             </Form>
                         </Card.Body>
                     </Card>    

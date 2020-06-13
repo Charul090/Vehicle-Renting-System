@@ -1,62 +1,86 @@
 import React, { useState } from 'react'
-import {Container, Row, Col, Card, Form, Button} from "react-bootstrap"
-import {useDispatch,useSelector} from "react-redux"
-import {User_Query,Admin_Query} from "../../Redux/login/action.js"
+import { Container, Row, Col, Card, Form, Button } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux"
+import { User_Query, Admin_Query,Logout } from "../../Redux/login/action.js"
 
-export default function Login({user}) {
+export default function Login({ user }) {
 
-    const [username,setUsername]=useState("")
-    const [password,setPassword]=useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
-    const [warning,setWarning]=useState(false)
-    const [warning_message,setMessage]=useState("")
+    const [warning, setWarning] = useState(false)
+    const [warning_message, setMessage] = useState("")
 
-    let {request,logged_in,message} =useSelector(state=>state.user)
+    let { request, logged_in, message, user_info } = useSelector(state => state.user)
 
-    
+
 
     const dispatch = useDispatch()
 
-    const handleSubmit=(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
 
         setWarning(false)
         setMessage("")
 
-        if(username !== "" && password !== ""){
-            let info={
+        if (username !== "" && password !== "") {
+            let info = {
                 username,
                 password
             }
 
-            if(user === "admin"){
+            if (user === "admin") {
                 dispatch(Admin_Query(info))
             }
-            else{
+            else {
                 dispatch(User_Query(info))
             }
 
-            
+            setUsername("")
+            setPassword("")
+
         }
-        else{
+        else {
             setWarning(true)
             setMessage("Please fill the fields")
         }
     }
 
+    const handleClick=()=>{
+        dispatch(Logout())
+    }
+
+    if (logged_in) {
+        return (
+            <Container>
+                <Row className="justify-content-center mt-5">
+                    <Col xs={12} sm={11} md={8} lg={6}>
+                        <Card className="pt-xs-3 p-sm-3 shadow-sm">
+                            <p className="lead">First Name: {user_info.first_name}</p>
+                            <p className="lead">Last Name: {user_info.last_name}</p>
+                            <p className="lead">Username: {user_info.username}</p>
+                            <Button variant="warning" onClick={handleClick}>Logout</Button>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
+
+
     return (
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col xs={12} sm={11} md={8} lg={6}>
-                    <Card className="pt-xs-3 p-sm-3">
-                        <h4 className="text-center">Welcome Back</h4>
-                        {warning?<p className="text-danger">{warning_message}</p>
-                            : request && !logged_in?
+                    <Card className="pt-xs-3 p-sm-3 shadow-sm">
+                        <h3 className="text-center">Welcome Back</h3>
+                        {warning ? <p className="text-danger">{warning_message}</p>
+                            : request && !logged_in ?
                                 <p className="text-danger">{message}</p>
-                        :null}
-                        {warning?null:request && logged_in?
+                                : null}
+                        {warning ? null : request && logged_in ?
                             <p className="text-success">{message}</p>
-                            :null}
+                            : null}
                         <Card.Body>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group>
@@ -67,7 +91,9 @@ export default function Login({user}) {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control value={password} onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder="Password" ></Form.Control>
                                 </Form.Group>
-                                <Button type="submit" variant="success" block>Sign In</Button>
+                                <Button type="submit" variant="success" block>
+                                    {user === "admin"?"Sign In as Admin":"Sign In"}
+                                </Button>
                             </Form>
                         </Card.Body>
                     </Card>

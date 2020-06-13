@@ -15,6 +15,7 @@ export default function Home() {
     let dispatch = useDispatch()
 
     let { logged_in, token } = useSelector(state => state.user)
+    let {status} =useSelector(state=>state.ride)
     let car_data = useSelector(state => state.carhome.data)
     let location_data = useSelector(state => state.location.data)
 
@@ -33,9 +34,7 @@ export default function Home() {
             dispatch(Location_Query())
         }
         else {
-            //history.push("/userlogin")
-            dispatch(Car_Query())
-            dispatch(Location_Query())
+            history.push("/userlogin")
         }
     }, [])
 
@@ -92,7 +91,7 @@ export default function Home() {
     }
 
 
-    if (complete) {
+    if (complete && status) {
         return (
             <>
                 <Redirect to="/confirmation" />
@@ -102,7 +101,7 @@ export default function Home() {
     else {
         return (
             <Container>
-                <h1 className="text-center">Home</h1>
+                <h1 className="text-center">Rent a Car and Ride NOW!</h1>
                 <Row>
                     <Col md={{ span: 6, offset: 0 }} className="mb-3 mb-md-0">
                         <Card className="shadow-sm">
@@ -138,7 +137,7 @@ export default function Home() {
                                     <Form.Label>
                                         Current Location
                                     </Form.Label>
-                                    <Form.Control type="text" readOnly defaultValue={current_car && current_car.location}></Form.Control>
+                                    <p className="lead">{current_car === undefined?null:current_car.location}</p>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>

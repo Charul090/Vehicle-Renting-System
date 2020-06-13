@@ -1,4 +1,4 @@
-import {Send_Query,Query_Successfull,Query_Failure} from "./actiontypes.js"
+import {Send_Query,Query_Successfull,Query_Failure,Clear_Register} from "./actiontypes.js"
 
 
 const initialState = {
@@ -8,6 +8,13 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
+
+        case Clear_Register:
+            return {
+                ...state,
+                message:"",
+                error:false
+            }
 
         case Send_Query:
             return {
