@@ -1,6 +1,12 @@
-import {Ride_Query,Ride_Successfull,Ride_Failure} from "./actiontypes.js"
+import {Clear,Ride_Query,Ride_Successfull,Ride_Failure} from "./actiontypes.js"
 import axios from "axios"
 
+
+const Clear_Ride=()=>{
+    return {
+        type:Clear
+    }
+}
 
 const Ride_Start=()=>{
     return {
@@ -46,4 +52,4 @@ const Send_Ride_Query=(info)=>{
 }
 
 
-export {Send_Ride_Query}
+export {Send_Ride_Query,Clear_Ride}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory,Redirect } from "react-router-dom"
 import { Car_Query } from "../../Redux/car_home/action.js"
 import { Location_Query } from "../../Redux/location/action.js"
 import { Container, Row, Col, Card, Form, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
@@ -17,35 +17,33 @@ export default function Home() {
     let { logged_in, token } = useSelector(state => state.user)
     let car_data = useSelector(state => state.carhome.data)
     let location_data = useSelector(state => state.location.data)
-    let { status } = useSelector(state => state.ride)
 
     const [car, setCar] = useState("3")
     const [destination, setDestination] = useState("1")
     const [total_distance, setDistance] = useState(0)
+    const [complete,setComplete]=useState(false)
 
     const current_car = car_data.find((elem) => elem.car_id === Number(car))
 
-    let current_location = null
-
-    if (current_car) {
-        current_location = [current_car.location_id, current_car.location]
-    }
-
 
     useEffect(() => {
+
+        console.log("1")
 
         if (logged_in) {
             dispatch(Car_Query())
             dispatch(Location_Query())
         }
         else {
-            history.push("/userlogin")
+            //history.push("/userlogin")
+            dispatch(Car_Query())
+            dispatch(Location_Query())
         }
     }, [])
 
     useEffect(() => {
-        if (current_location !== null && destination !== undefined) {
-            let curr_info = location_data.find((elem) => elem.location_id === current_location[0])
+        if ( destination !== undefined) {
+            let curr_info = location_data.find((elem) => elem.location_id === current_car.location_id)
             let dest_info = location_data.find((elem) => elem.location_id === Number(destination))
 
             if (curr_info && dest_info) {
@@ -58,7 +56,7 @@ export default function Home() {
             }
         }
 
-    }, [current_location, destination])
+    }, [current_car, destination])
 
     const handleClick = () => {
         let car_id = Number(car)
@@ -73,17 +71,18 @@ export default function Home() {
             token,
             time,
             distance: total_distance,
-            start: current_location[0],
+            start: current_car.location_id,
             destination: Number(destination)
         }
 
         dispatch(Send_Ride_Query(obj))
+        setComplete(true)
     }
 
-    if (status) {
+    if (complete) {
         return (
             <>
-                <Confirmation />
+                <Redirect to="/confirmation" />
             </>
         )
     }
@@ -126,15 +125,15 @@ export default function Home() {
                                     <Form.Label>
                                         Current Location
                                     </Form.Label>
-                                    <Form.Control type="text" readOnly defaultValue={current_location && current_location[1]}></Form.Control>
+                                    <Form.Control type="text" readOnly defaultValue={current_car && current_car.location}></Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>
                                         Select Destination
                                     </Form.Label>
                                     <Form.Control as="select" value={destination} onChange={(e) => { setDestination(e.target.value) }}>
-                                        {location_data && location_data.filter((elem) => {
-                                            return elem.location_id !== current_location[0]
+                                        {location_data.length === 0 && current_car?null: location_data.filter((elem) => {
+                                            return elem.location_id !== current_car.location_id
                                         }).map((elem) => {
                                             return <option value={elem.location_id} key={`${elem.location_id}-x`}>{elem.location}</option>
                                         })}

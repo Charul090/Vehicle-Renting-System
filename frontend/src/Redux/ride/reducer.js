@@ -1,4 +1,4 @@
-import { Ride_Query, Ride_Successfull, Ride_Failure } from "./actiontypes.js"
+import { Clear,Ride_Query, Ride_Successfull, Ride_Failure } from "./actiontypes.js"
 
 const initialState = {
     status: false,
@@ -25,6 +25,13 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 status:false,
                 message:""
+            }
+        case Clear:
+            return {
+                ...state,
+                status:false,
+                message:"",
+                info:{}
             }
         default:
             return {...state}
