@@ -49,8 +49,14 @@ export default function Login({user}) {
             <Row className="justify-content-center mt-5">
                 <Col xs={12} sm={11} md={8} lg={6}>
                     <Card className="pt-xs-3 p-sm-3">
-                        <p className="text-danger">{warning?warning_message:request && !logged_in?message:null}</p>
-                        <p className="text-success">{warning?null:request && logged_in?message:null}</p>
+                        <h4 className="text-center">Welcome Back</h4>
+                        {warning?<p className="text-danger">{warning_message}</p>
+                            : request && !logged_in?
+                                <p className="text-danger">{message}</p>
+                        :null}
+                        {warning?null:request && logged_in?
+                            <p className="text-success">{message}</p>
+                            :null}
                         <Card.Body>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group>
@@ -61,7 +67,7 @@ export default function Login({user}) {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control value={password} onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder="Password" ></Form.Control>
                                 </Form.Group>
-                                <Button type="submit" variant="success" block>Login</Button>
+                                <Button type="submit" variant="success" block>Sign In</Button>
                             </Form>
                         </Card.Body>
                     </Card>
