@@ -10,10 +10,6 @@ export default function Pages({ page, total_pages ,perpage,user_id}) {
 
     let elements = []
 
-    useEffect(() => {
-        dispatch(PrevRides_Info_Query(user_id,page,perpage))
-    }, [page,perpage])
-
     const handleClick = (e) => {
         let val = e.target.textContent
 
@@ -30,23 +26,20 @@ export default function Pages({ page, total_pages ,perpage,user_id}) {
 
     for (let i = page-1; i < page+4; i++) {
         if (i === page-1) {
-            elements.push(<Pagination.Item onClick={handleClick} disabled={page === 1}>Prev</Pagination.Item>)
+            elements.push(<Pagination.Item onClick={handleClick} disabled={page === 1} key={`${i}-x`}>Prev</Pagination.Item>)
             continue
         }
 
         if (i === page+3) {
-            console.log("!")
-            elements.push(<Pagination.Item onClick={handleClick} disabled={page === total_pages}>Next</Pagination.Item>)
+            elements.push(<Pagination.Item onClick={handleClick} disabled={page === total_pages} key={`${i}-x`}>Next</Pagination.Item>)
             continue
         }
 
         if (i <= total_pages) {
-            elements.push(<Pagination.Item onClick={handleClick} active={i === page}>{i}</Pagination.Item>)
+            elements.push(<Pagination.Item onClick={handleClick} active={i === page} key={`${i}-x`}>{i}</Pagination.Item>)
         }
 
     }
-
-    console.log(elements)
 
     return (
         <div className="d-flex justify-content-center">

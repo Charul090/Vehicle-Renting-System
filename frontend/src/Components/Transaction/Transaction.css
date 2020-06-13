@@ -1,0 +1,5 @@
+@media screen and (max-width:572px){
+    .list-group h6{
+        font-size: 15px;
+    }
+}
