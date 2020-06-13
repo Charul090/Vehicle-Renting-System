@@ -30,7 +30,7 @@ export default function Transaction() {
     else {
         return (
             <Container>
-                <Row className="justify-content-center mt-4">
+                <Row className="justify-content-center mt-4 mb-4">
                     <Col md={{span:8}}>
                         <Card className="shadow-sm">
                             <Card.Header>

@@ -55,7 +55,7 @@ export default function Login({ user }) {
             <Container>
                 <Row className="justify-content-center mt-5">
                     <Col xs={12} sm={11} md={8} lg={6}>
-                        <Card className="pt-xs-3 p-sm-3 shadow-sm">
+                        <Card className="p-3 shadow-sm">
                             <p className="lead">First Name: {user_info.first_name}</p>
                             <p className="lead">Last Name: {user_info.last_name}</p>
                             <p className="lead">Username: {user_info.username}</p>
@@ -72,7 +72,7 @@ export default function Login({ user }) {
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col xs={12} sm={11} md={8} lg={6}>
-                    <Card className="pt-xs-3 p-sm-3 shadow-sm">
+                    <Card className="p-3 shadow-sm">
                         <h3 className="text-center">Welcome Back</h3>
                         {warning ? <p className="text-danger">{warning_message}</p>
                             : request && !logged_in ?

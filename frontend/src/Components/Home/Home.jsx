@@ -7,7 +7,7 @@ import { Container, Row, Col, Card, Form, ListGroup, ListGroupItem, Button } fro
 import { distance } from "./distance.js"
 import DateTime from "datetime-js"
 import { Send_Ride_Query } from "../../Redux/ride/action.js"
-import Confirmation from '../Confirmation/Confirmation.jsx'
+import "./Home.css"
 
 export default function Home() {
 
@@ -101,10 +101,10 @@ export default function Home() {
     else {
         return (
             <Container>
-                <h1 className="text-center">Rent a Car and Ride NOW!</h1>
+                <h1 className="text-center mt-5 mb-2 main-title">Rent a Car and Ride NOW!</h1>
                 <Row>
                     <Col md={{ span: 6, offset: 0 }} className="mb-3 mb-md-0">
-                        <Card className="shadow-sm">
+                        <Card className="shadow-sm pt-1">
                             <Card.Body>
                                 <Form.Group>
                                     <Form.Label>
@@ -119,8 +119,7 @@ export default function Home() {
                                 <ListGroup>
                                     {current_car &&
                                         <>
-                                            <ListGroupItem>Car Make: {current_car.car_make}</ListGroupItem>
-                                            <ListGroupItem>Model: {current_car.car_model}</ListGroupItem>
+                                            <ListGroupItem>Car: {current_car.car_make} {current_car.car_model}</ListGroupItem>
                                             <ListGroupItem>Color: {current_car.car_color}</ListGroupItem>
                                             <ListGroupItem>Car VIN: {current_car.car_vin}</ListGroupItem>
                                             <ListGroupItem>Current Location: {current_car.location}</ListGroupItem>
@@ -130,8 +129,8 @@ export default function Home() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col md={{ span: 6 }}>
-                        <Card className="shadow-sm">
+                    <Col md={{ span: 6 }} className="mb-3 mb-md-0 ">
+                        <Card className="shadow-sm p-4 ">
                             <Card.Body>
                                 <Form.Group>
                                     <Form.Label>
