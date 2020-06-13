@@ -2,9 +2,11 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+from datetime import datetime
 import json
 import time
 import jwt
+import math
 
 app=Flask(__name__)
 
@@ -144,7 +146,8 @@ def authCheck():
     info={
         "first_name":result[0][1],
         "last_name":result[0][2],
-        "username":result[0][3]
+        "username":result[0][3],
+        "user_id":data["user_id"]
     }
 
 
@@ -188,7 +191,7 @@ def getBasicCarData():
 
     return json.dumps({"data":data})
 
-
+#Returns location information
 @app.route("/location")
 def getLocationData():
     cur=mysql.connection.cursor()
@@ -284,3 +287,42 @@ def updateRide():
     }
 
     return json.dumps({"status":True,"message":"Your Ride has completed Successfully","info":info})
+
+
+def Pagination(page,per_page,total):
+    total_pages=math.ceil(total/per_page)
+    start_index=(page-1)*per_page
+    end_index=page*per_page
+
+    return [total_pages,start_index,end_index]
+
+
+@app.route("/user/prevride")
+def userPrevRide():
+    user_id=request.args.get("user_id")
+    page=request.args.get("page",default=1,type=int)
+    per_page=request.args.get("per_page",default=10,type=int)
+
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT c.car_name,c.car_make,l1.location,l2.location,uc.time FROM user_car as uc JOIN car as c ON uc.car_id=c.id JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id WHERE uc.user_id="%d" ORDER BY uc.time DESC;''' %(int(user_id)))
+    result = cur.fetchall()
+
+    data=[]
+    for x in result:
+        obj={
+            "car_name":x[0],
+            "car_make":x[1],
+            "start":x[2],
+            "destination":x[3],
+            "time":x[4].strftime("%Y/%m/%d, %H:%M:%S")
+        }
+
+        data.append(obj)
+    
+    total=len(data)
+    page_info=Pagination(page,per_page,total)
+
+    data=data[page_info[1]:page_info[2]]
+
+
+    return json.dumps({"total_pages":page_info[0],"data":data})
