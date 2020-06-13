@@ -12,7 +12,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '@TorresDash09'
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -325,4 +325,4 @@ def userPrevRide():
     data=data[page_info[1]:page_info[2]]
 
 
-    return json.dumps({"total_pages":page_info[0],"data":data})
+    return json.dumps({"total_pages":page_info[0],"current_page":page,"data":data})

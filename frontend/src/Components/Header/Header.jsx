@@ -30,7 +30,13 @@ export default function Header() {
                         {logged_in ? "Profile" : "Login"}
                     </Link>
                 </div>
-                {logged_in ? null :
+                {logged_in ?
+                    <div>
+                        <Link to="/prevride">
+                            Previous Rides
+                        </Link>
+                    </div>
+                    :
                     <div>
                         <Link to="/adminlogin">Admin</Link>
                     </div>
