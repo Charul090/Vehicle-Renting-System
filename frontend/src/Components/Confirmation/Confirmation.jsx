@@ -35,7 +35,7 @@ export default function Confirmation() {
             <h3 className="message text-center mt-3">{message}</h3>
             <Row className="justify-content-center mt-3">
                 <Col xs={12} md={8} lg={6}>
-                    <Card className="shadow-sm p-3">
+                    <Card className="shadow-sm p-3 border-cyanish">
                         <Card.Body className="card-body">
                             <h4>UserName: {info.user_name}</h4>
                             <h4>From: {info.start}</h4>

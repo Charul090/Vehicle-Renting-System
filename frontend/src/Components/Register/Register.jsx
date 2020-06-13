@@ -54,7 +54,7 @@ export default function Register() {
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col xs={12} sm={11} md={8} lg={6}>
-                    <Card className="p-3">
+                    <Card className="p-3 border-green">
                         <Card.Body>
                             <h3 className="text-center">Sign up to Rent a car and travel</h3>
                                     {warning?<p className="text-danger">{warning_message}</p>

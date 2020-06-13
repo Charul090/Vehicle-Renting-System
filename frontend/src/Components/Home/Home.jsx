@@ -104,7 +104,7 @@ export default function Home() {
                 <h1 className="text-center mt-5 mb-2 main-title">Rent a Car and Ride NOW!</h1>
                 <Row>
                     <Col md={{ span: 6, offset: 0 }} className="mb-3 mb-md-0">
-                        <Card className="shadow-sm pt-1">
+                        <Card className="shadow-sm pt-1 border-bluish">
                             <Card.Body>
                                 <Form.Group>
                                     <Form.Label>
@@ -130,7 +130,7 @@ export default function Home() {
                         </Card>
                     </Col>
                     <Col md={{ span: 6 }} className="mb-3 mb-md-0 ">
-                        <Card className="shadow-sm p-4 ">
+                        <Card className="shadow-sm p-4 border-reddish">
                             <Card.Body>
                                 <Form.Group>
                                     <Form.Label>

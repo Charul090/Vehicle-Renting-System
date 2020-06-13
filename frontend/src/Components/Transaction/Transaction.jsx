@@ -32,7 +32,7 @@ export default function Transaction() {
             <Container>
                 <Row className="justify-content-center mt-4 mb-4">
                     <Col md={{span:8}}>
-                        <Card className="shadow-sm">
+                        <Card className="shadow">
                             <Card.Header>
                                 <h5 className="text-center">Transaction Details</h5>
                             </Card.Header>
