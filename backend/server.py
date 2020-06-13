@@ -12,7 +12,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '@TorresDash09'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -304,7 +304,7 @@ def userPrevRide():
     per_page=request.args.get("per_page",default=10,type=int)
 
     cur=mysql.connection.cursor()
-    cur.execute(''' SELECT c.car_name,c.car_make,l1.location,l2.location,uc.time FROM user_car as uc JOIN car as c ON uc.car_id=c.id JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id WHERE uc.user_id="%d" ORDER BY uc.time DESC;''' %(int(user_id)))
+    cur.execute(''' SELECT c.car_name,c.car_make,l1.location,l2.location,uc.time,uc.id FROM user_car as uc JOIN car as c ON uc.car_id=c.id JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id WHERE uc.user_id="%d" ORDER BY uc.time DESC;''' %(int(user_id)))
     result = cur.fetchall()
 
     data=[]
@@ -314,7 +314,8 @@ def userPrevRide():
             "car_make":x[1],
             "start":x[2],
             "destination":x[3],
-            "time":x[4].strftime("%Y/%m/%d, %H:%M:%S")
+            "time":x[4].strftime("%Y/%m/%d, %H:%M:%S"),
+            "transaction_id":x[5]
         }
 
         data.append(obj)
@@ -326,3 +327,36 @@ def userPrevRide():
 
 
     return json.dumps({"total_pages":page_info[0],"current_page":page,"data":data})
+
+
+#Function that returns Single Transaction Details
+@app.route("/user/transaction/<int:id>")
+def getTransactionDetails(id):
+
+
+    cur=mysql.connection.cursor()
+
+    cur.execute(''' SELECT uc.id,uc.distance,uc.cost,uc.time,c.car_name,c.car_make,c.car_vin,c.total_distance,l1.location as Start,l2.location as Destination FROM user_car as uc JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id JOIN car as c ON uc.car_id=c.id WHERE uc.id="%d";''' %(id))
+    
+    result=cur.fetchall()
+
+    data=[]
+
+    for x in result:
+        obj={
+            "transaction_id":x[0],
+            "distance":x[1],
+            "cost":x[2],
+            "time":x[3].strftime("%Y/%m/%d, %H:%M:%S"),
+            "car_name":x[4],
+            "car_make":x[5],
+            "car_vin":x[6],
+            "car_totaldistance":x[7],
+            "start":x[8],
+            "destination":x[9]
+        }
+
+        data.append(obj)
+    
+
+    return json.dumps({"data":data})
