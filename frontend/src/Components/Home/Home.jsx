@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { Link, useHistory,Redirect } from "react-router-dom"
+import { Link, useHistory, Redirect } from "react-router-dom"
 import { Car_Query } from "../../Redux/car_home/action.js"
 import { Location_Query } from "../../Redux/location/action.js"
 import { Container, Row, Col, Card, Form, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
@@ -21,14 +21,12 @@ export default function Home() {
     const [car, setCar] = useState("3")
     const [destination, setDestination] = useState("1")
     const [total_distance, setDistance] = useState(0)
-    const [complete,setComplete]=useState(false)
+    const [complete, setComplete] = useState(false)
 
     const current_car = car_data.find((elem) => elem.car_id === Number(car))
 
 
     useEffect(() => {
-
-        console.log("1")
 
         if (logged_in) {
             dispatch(Car_Query())
@@ -42,21 +40,35 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
-        if ( destination !== undefined) {
+
+        if (destination !== undefined && current_car !== undefined) {
             let curr_info = location_data.find((elem) => elem.location_id === current_car.location_id)
+
             let dest_info = location_data.find((elem) => elem.location_id === Number(destination))
 
-            if (curr_info && dest_info) {
-                let lat1 = Number(curr_info.latitude)
-                let lon1 = Number(curr_info.longitutde)
-                let lat2 = Number(dest_info.latitude)
-                let lon2 = Number(dest_info.longitutde)
-
-                setDistance(parseInt(distance(lat1, lon1, lat2, lon2)))
+            if (current_car.location_id === Number(destination)){
+                if(current_car.location_id === 1){
+                    setDestination("2")
+                }
+                else{
+                    setDestination("1")
+                }
             }
+            else {
+                if (curr_info && dest_info) {
+                    let lat1 = Number(curr_info.latitude)
+                    let lon1 = Number(curr_info.longitutde)
+                    let lat2 = Number(dest_info.latitude)
+                    let lon2 = Number(dest_info.longitutde)
+
+                    setDistance(parseInt(distance(lat1, lon1, lat2, lon2)))
+                }
+            }
+
+
         }
 
-    }, [current_car, destination])
+    }, [current_car, destination, location_data])
 
     const handleClick = () => {
         let car_id = Number(car)
@@ -78,6 +90,7 @@ export default function Home() {
         dispatch(Send_Ride_Query(obj))
         setComplete(true)
     }
+
 
     if (complete) {
         return (
@@ -132,8 +145,8 @@ export default function Home() {
                                         Select Destination
                                     </Form.Label>
                                     <Form.Control as="select" value={destination} onChange={(e) => { setDestination(e.target.value) }}>
-                                        {location_data.length === 0 && current_car?null: location_data.filter((elem) => {
-                                            return elem.location_id !== current_car.location_id
+                                        {location_data.length === 0 || current_car === undefined ? null : location_data.filter((elem) => {
+                                            return elem.location_id !== Number(current_car.location_id)
                                         }).map((elem) => {
                                             return <option value={elem.location_id} key={`${elem.location_id}-x`}>{elem.location}</option>
                                         })}
