@@ -10,7 +10,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '@TorresDash09'
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -137,6 +137,17 @@ def authCheck():
 
     current_time=time.time()
 
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT * FROM user WHERE id="%d" ''' %(data["user_id"]))
+    result=cur.fetchall()
+
+    info={
+        "first_name":result[0][1],
+        "last_name":result[0][2],
+        "username":result[0][3]
+    }
+
+
     if data["time"] < current_time:
         return json.dumps({
             "error":True,
@@ -145,6 +156,7 @@ def authCheck():
     else:
         return json.dumps({
             "error":False,
+            "data":info,
             "message":"Valid Token"
         })
 
