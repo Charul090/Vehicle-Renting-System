@@ -328,7 +328,6 @@ def userPrevRide():
 
     return json.dumps({"total_pages":page_info[0],"current_page":page,"data":data})
 
-
 #Function that returns Single Transaction Details
 @app.route("/user/transaction/<int:id>")
 def getTransactionDetails(id):
@@ -360,3 +359,90 @@ def getTransactionDetails(id):
     
 
     return json.dumps({"data":data})
+
+
+######################Admin
+
+
+def getMostDistance():
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT SUM(distance) as k,c.car_name,c.car_make FROM user_car as uc JOIN car as c ON uc.car_id=c.id GROUP BY car_id ORDER BY k DESC LIMIT 1;''')
+
+    result=cur.fetchall()
+
+    data={
+        "distance":int(result[0][0]),
+        "car_name":result[0][1],
+        "car_make":result[0][2]
+    }
+
+    return data
+
+
+def GraphData():
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT car_make,car_name,COUNT(*) as rides FROM user_car as uc JOIN car as c ON uc.car_id=c.id GROUP BY car_id; ''')
+
+    result=cur.fetchall()
+
+    data=[]
+    labels=[]
+
+    for x in result:
+        labels.append(x[0]+" "+x[1])
+        data.append(x[2])
+
+    
+    return {"data":data,"label":labels}
+
+def totalRevenue():
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT SUM(cost),SUM(distance) FROM user_car; ''')
+    result=cur.fetchall()
+
+    obj={}
+    for x in result:
+        obj["total_earning"] = int(x[0])
+        obj["total_distance"]=int(x[1])
+    
+    return obj
+
+@app.route("/dashboard")
+def dashboardInfo():
+    
+    most_distance=getMostDistance()
+    stat=totalRevenue()
+    graph=GraphData()
+
+
+    return json.dumps({"most_distance":most_distance,"stat":stat,"graph":graph})
+
+
+@app.route("/alltransactions")
+def getallTransactions():
+    page=request.args.get("page",default=1,type=int)
+
+    cur=mysql.connection.cursor()
+    cur.execute(''' SELECT c.car_name,c.car_make,l1.location,l2.location,uc.time,uc.id FROM user_car as uc JOIN car as c ON uc.car_id=c.id JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id ORDER BY uc.time DESC;''')
+    result = cur.fetchall()
+
+    data=[]
+    for x in result:
+        obj={
+            "car_name":x[0],
+            "car_make":x[1],
+            "start":x[2],
+            "destination":x[3],
+            "time":x[4].strftime("%Y/%m/%d, %H:%M:%S"),
+            "transaction_id":x[5]
+        }
+
+        data.append(obj)
+    
+    total=len(data)
+    page_info=Pagination(page,10,total)
+
+    data=data[page_info[1]:page_info[2]]
+
+
+    return json.dumps({"total_pages":page_info[0],"current_page":page,"data":data})
