@@ -56,7 +56,7 @@ export default function Register() {
                 <Col xs={12} sm={11} md={8} lg={6}>
                     <Card className="p-3 border-green">
                         <Card.Body>
-                            <h3 className="text-center">Sign up to Rent a car and travel</h3>
+                            <h3 className="text-center mb-4">Sign up to Rent a car and travel</h3>
                                     {warning?<p className="text-danger">{warning_message}</p>
                                     :error?<p className="text-danger">{message}</p>
                                     :null}

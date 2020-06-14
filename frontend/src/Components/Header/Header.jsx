@@ -71,7 +71,7 @@ export default function Header() {
     }
 
     return (
-        <header className="py-3 border-bottom border-light shadow-sm">
+        <header className="py-3 border-bottom border-light shadow-sm d-flex justify-content-between">
             <div className={styles.container1}>
                 <h3 className={styles.title}>
                     frEEway
@@ -81,16 +81,6 @@ export default function Header() {
                 <div>
                     <Link to="/">Rent Car</Link>
                 </div>
-                {logged_in ? null :
-                    <div>
-                        <Link to="/register">Register</Link>
-                    </div>
-                }
-                <div>
-                    <Link to="/userlogin">
-                        {logged_in ? "Profile" : "Login"}
-                    </Link>
-                </div>
                 {logged_in ?
                     <div>
                         <Link to="/prevride">
@@ -98,6 +88,21 @@ export default function Header() {
                         </Link>
                     </div>
                     : null
+                }
+                <div>
+                    <Link to="/userlogin">
+                        {logged_in ? "Profile" : "Login"}
+                    </Link>
+                </div>
+                {logged_in ? null :
+                    <div>
+                        <Link to="/register">Register</Link>
+                    </div>
+                }
+                {logged_in ? null :
+                    <div>
+                        <Link to="/adminlogin">Admin</Link>
+                    </div>
                 }
             </div>
         </header>

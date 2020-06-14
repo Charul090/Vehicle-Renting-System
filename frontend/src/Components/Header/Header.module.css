@@ -1,20 +1,24 @@
 .container1{
     display:flex;
-    justify-content: center;
-    width:100%;
-    text-align: center;
-    padding:5px 10px;
+    width:30%;
+    text-align: left;
+    padding:5px 20px;
 }
 
 .title{
     line-height: 1;
+    font-size:30px;
+    font-family: 'MuseoModerno', cursive;
 }
 
 .container2{
-    width:60%;
-    margin:0 auto;
+    width:40%;
     display: flex;
     justify-content: space-around;
+}
+
+.container2 *{
+    line-height: 3.3;
 }
 
 .icon{
@@ -27,26 +31,26 @@
 
 @media screen and (max-width:768px){
     .container2{
-        width:85%;
+        width:45%;
     }
 }
 
 
 @media screen and (max-width:562px){
     .container1{
+        width:100%;
         justify-content: space-between;
+        padding:5px 10px;
+        text-align: center;
     }
 
     .container2{
         flex-direction: column;
         align-items: center;
+        margin:0 auto;
     }
 
     .icon_container{
         visibility: visible;
-    }
-
-    .container2 > div{
-        margin:10px 0;
     }
 }
