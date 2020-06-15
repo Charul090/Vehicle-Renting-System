@@ -29,7 +29,7 @@
 
 **Setting Up flask enviornment**
 
-    cd cd Vehicle-Renting-System-master/frontend
+    cd Vehicle-Renting-System-master/frontend
     pip install virtualenv
     source test/bin/activate
     pip install flask
