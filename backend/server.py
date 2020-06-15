@@ -12,7 +12,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '@TorresDash09'
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -407,15 +407,25 @@ def totalRevenue():
     
     return obj
 
+def totalUsers():
+    cur=mysql.connection.cursor()
+    cur.execute('''  SELECT COUNT(*) from user; ''')
+    result=cur.fetchall()
+
+    count=result[0][0]
+
+    return count
+
 @app.route("/dashboard")
 def dashboardInfo():
     
     most_distance=getMostDistance()
     stat=totalRevenue()
     graph=GraphData()
+    count=totalUsers()
 
 
-    return json.dumps({"most_distance":most_distance,"stat":stat,"graph":graph})
+    return json.dumps({"most_distance":most_distance,"stat":stat,"graph":graph,"users_count":count})
 
 
 @app.route("/alltransactions")
