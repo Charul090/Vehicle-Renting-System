@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.icon1{
+    color:#d04860;
+    font-size:30px;
+}
+
+.icon2{
+    color:#43A047;
+    font-size:30px;
+}
+
+.icon3{
+    color:#d18d55;
+    font-size: 33px;
+}
+
+.icon4{
+    color:#3949AB;
+    font-size:33px;
+}
+
+.cards_container{
+    font-family: 'Nunito', sans-serif;
+}

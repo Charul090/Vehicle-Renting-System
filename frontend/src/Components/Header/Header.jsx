@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive'
 
 export default function Header() {
 
-    let { logged_in } = useSelector(state => state.user)
+    let { logged_in,admin } = useSelector(state => state.user)
 
     const [display,setDisplay] = useState(false)
 
@@ -23,6 +23,12 @@ export default function Header() {
             setDisplay(false)
         }
     },[match])
+
+    if(logged_in && admin){
+        return (
+            null
+        )
+    }
 
     if(match){
         return (

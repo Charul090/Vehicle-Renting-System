@@ -7,6 +7,7 @@ import AdminLogin from '../Components/AdminLogin/AdminLogin.jsx'
 import Confirmation from '../Components/Confirmation/Confirmation.jsx'
 import PrevRide from "../Components/PrevRide/PrevRide.jsx"
 import Transaction from '../Components/Transaction/Transaction.jsx'
+import Dashboard from "../Components/Dashboard/Dashboard.jsx"
 
 export default function Routes() {
     return (
@@ -18,6 +19,7 @@ export default function Routes() {
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/prevride" component={PrevRide} />
             <Route path="/user/transaction/:id" component={Transaction}/>
+            <Route path="/admin/dashboard" component={Dashboard} />
         </Switch>
     )
 }

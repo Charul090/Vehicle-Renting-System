@@ -12,7 +12,7 @@ app=Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '@TorresDash09'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'project'
 
 CORS(app)
@@ -389,7 +389,7 @@ def GraphData():
     labels=[]
 
     for x in result:
-        labels.append(x[0]+" "+x[1])
+        labels.append(x[1])
         data.append(x[2])
 
     

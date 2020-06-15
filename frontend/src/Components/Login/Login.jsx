@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { User_Query, Admin_Query,Logout } from "../../Redux/login/action.js"
+import { Redirect } from 'react-router-dom'
 
 export default function Login({ user }) {
 
@@ -11,7 +12,7 @@ export default function Login({ user }) {
     const [warning, setWarning] = useState(false)
     const [warning_message, setMessage] = useState("")
 
-    let { request, logged_in, message, user_info } = useSelector(state => state.user)
+    let { request, logged_in, message, user_info,admin } = useSelector(state => state.user)
 
 
 
@@ -48,6 +49,12 @@ export default function Login({ user }) {
 
     const handleClick=()=>{
         dispatch(Logout())
+    }
+
+    if(logged_in && admin){
+        return (
+            <Redirect to="/admin/dashboard" />
+        )
     }
 
     if (logged_in) {

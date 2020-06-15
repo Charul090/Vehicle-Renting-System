@@ -7,8 +7,9 @@ import locationReducer from "./location/reducer.js"
 import rideReducer from "./ride/reducer.js"
 import prevRideReducer from "./prevrides/reducer.js"
 import transactionReducer from "./transaction/reducer.js"
+import dashboardStatsReducer from "./stats/reducer.js"
 
-const reducers = combineReducers({regis:regisReducer,user:loginReducer,carhome:carhomeReducer,location:locationReducer,ride:rideReducer,user_prev_ride:prevRideReducer,transaction:transactionReducer})
+const reducers = combineReducers({regis:regisReducer,user:loginReducer,carhome:carhomeReducer,location:locationReducer,ride:rideReducer,user_prev_ride:prevRideReducer,transaction:transactionReducer,dashboard:dashboardStatsReducer})
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
