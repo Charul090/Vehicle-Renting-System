@@ -5,3 +5,19 @@
     -moz-box-shadow: 0px 0.5px 15px 0px rgba(199, 199, 199, 0.24);
     box-shadow: 0px 0.5px 15px 0px rgba(199, 199, 199, 0.24);
 }
+
+
+
+@media screen and (max-width:768px){
+    .header > div > div{
+        padding:10px 0;
+    }
+
+    .header h4{
+        line-height: 1.2;
+    }
+
+    .icon{
+        font-size: 24px;
+    }
+}

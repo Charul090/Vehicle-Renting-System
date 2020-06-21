@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import styles from "./Header.module.css"
@@ -8,69 +8,74 @@ import { useMediaQuery } from 'react-responsive'
 
 export default function Header() {
 
-    let { logged_in,admin } = useSelector(state => state.user)
+    let { logged_in, admin } = useSelector(state => state.user)
 
-    const [display,setDisplay] = useState(false)
+    const [display, setDisplay] = useState(false)
 
-    const match=useMediaQuery({query:"(max-device-width:562px)"})
+    const match = useMediaQuery({ query: "(max-device-width:562px)" })
 
-    const handleClick=()=>{
+    const handleClick = () => {
         setDisplay(!display)
     }
 
-    useEffect(()=>{
-        if(!match){
+    useEffect(() => {
+        if (!match) {
             setDisplay(false)
         }
-    },[match])
+    }, [match])
 
-    if(logged_in && admin){
+    if (logged_in && admin) {
         return (
             null
         )
     }
 
-    if(match){
+    if (match) {
         return (
             <header className="py-3 border-bottom border-light shadow-sm">
                 <div className={styles.container1}>
-                    <IconContext.Provider value={{className: styles.icon}}>
+                    <IconContext.Provider value={{ className: styles.icon }}>
                         <div className={styles.icon_container}>
-                            <FaHamburger onClick={handleClick}/>
+                            <FaHamburger onClick={handleClick} />
                         </div>
                     </IconContext.Provider>
                     <h3 className={styles.title}>
                         frEEway
                     </h3>
                     <div>
-    
+
                     </div>
                 </div>
-                {display?
-                                <div className={styles.container2}>
-                                <div>
-                                    <Link to="/">Rent Car</Link>
-                                </div>
-                                {logged_in ? null :
-                                    <div>
-                                        <Link to="/register">Register</Link>
-                                    </div>
-                                }
-                                <div>
-                                    <Link to="/userlogin">
-                                        {logged_in ? "Profile" : "Login"}
-                                    </Link>
-                                </div>
-                                {logged_in ?
-                                    <div>
-                                        <Link to="/prevride">
-                                            Previous Rides
-                                        </Link>
-                                    </div>
-                                    : null
-                                }
+                {display ?
+                    <div className={styles.container2}>
+                        <div>
+                            <Link to="/">Rent Car</Link>
+                        </div>
+                        {logged_in ? null :
+                            <div>
+                                <Link to="/register">Register</Link>
                             </div>
-                            :null}
+                        }
+                        <div>
+                            <Link to="/userlogin">
+                                {logged_in ? "Profile" : "Login"}
+                            </Link>
+                        </div>
+                        {logged_in ?
+                            <div>
+                                <Link to="/prevride">
+                                    Previous Rides
+                                        </Link>
+                            </div>
+                            : null
+                        }
+                        {logged_in ? null :
+                            <div>
+                                <Link to="/adminlogin">Admin</Link>
+                            </div>
+                        }
+                    </div>
+                    : null}
             </header>
         )
 
