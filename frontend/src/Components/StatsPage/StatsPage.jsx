@@ -3,10 +3,10 @@ import { Row, Col, Card } from "react-bootstrap"
 import { Start_Stats_Query } from "../../Redux/stats/action.js"
 import { useDispatch, useSelector } from "react-redux"
 import { AiFillCar } from "react-icons/ai"
-import {FaRupeeSign} from "react-icons/fa"
+import { FaRupeeSign } from "react-icons/fa"
 import { IconContext } from "react-icons"
-import {GiPathDistance} from "react-icons/gi"
-import {AiOutlineUser} from "react-icons/ai"
+import { GiPathDistance } from "react-icons/gi"
+import { AiOutlineUser } from "react-icons/ai"
 import styles from "./StatsPage.module.css"
 import BarChart from '../BarChart/BarChart.jsx'
 
@@ -20,7 +20,7 @@ export default function StatsPage() {
     }, [])
 
     return (
-        <div className="mt-4">
+        <div className="mt-4 scroll p-4">
             <Row className={styles.cards_container}>
                 <Col md={6} className="mb-3">
                     <Card className="p-4 text-center">
@@ -65,13 +65,15 @@ export default function StatsPage() {
                             </IconContext.Provider>
                             Total distance
                         </h5>
-                        <h4>{stat.total_distance}</h4>
+                        <h4>{stat.total_distance} km</h4>
                     </Card>
                 </Col>
             </Row>
             <Row>
-                <Col md={{span:10,offset:1}}>
-                    <BarChart />
+                <Col md={{ span: 10, offset: 1 }}>
+                    <Card className="p-4 text-center">
+                        <BarChart />
+                    </Card>
                 </Col>
             </Row>
         </div>
