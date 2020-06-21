@@ -6,8 +6,6 @@ export default function BarChart() {
 
     let { graph } = useSelector(state => state.dashboard)
 
-    console.log(graph.data)
-
     let data = {
         labels: graph.label,
         datasets: [

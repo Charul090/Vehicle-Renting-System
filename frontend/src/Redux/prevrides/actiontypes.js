@@ -2,6 +2,10 @@ const Ride_Query = "Ride_Query"
 const Ride_Query_Successfull="Ride_Query_Successfull"
 const Ride_Query_Failure="Ride_Query_Failure"
 
+const SEND_TRANSACTION_QUERY="SEND_TRANSACTION_QUERY"
+const TRANSACTION_QUERY_SUCCESSFULL="TRANSACTION_QUERY_SUCCESSFULL"
+const TRANSACTION_QUERY_FAILURE="TRANSACTION_QUERY_FAILURE"
+
 const Change_Page="Change_Page"
 
-export {Ride_Query,Ride_Query_Successfull,Ride_Query_Failure,Change_Page}
+export {Ride_Query,Ride_Query_Successfull,Ride_Query_Failure,Change_Page,SEND_TRANSACTION_QUERY,TRANSACTION_QUERY_SUCCESSFULL,TRANSACTION_QUERY_FAILURE}

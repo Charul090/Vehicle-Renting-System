@@ -3,9 +3,17 @@ import { Dropdown, DropdownButton } from 'react-bootstrap'
 import styles from "./DashBoardHeader.module.css"
 import { Link } from "react-router-dom"
 import { useMediaQuery } from "react-responsive"
+import { useDispatch } from 'react-redux'
+import {Logout} from "../../Redux/login/action.js"
 
 export default function DashBoardHeader() {
     const deviceWidth = useMediaQuery({ query: '(max-width: 768px)' })
+
+    const dispatch = useDispatch()
+
+    const handleLogout=()=>{
+        dispatch(Logout())
+    }
 
     return (
         <header className={styles.header}>
@@ -23,7 +31,7 @@ export default function DashBoardHeader() {
                 }
                 <div>
                     <DropdownButton variant="outline-dark" title="Logout" size="sm">
-                        <Dropdown.Item>Logout</Dropdown.Item>
+                        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                     </DropdownButton>
                 </div>
             </div>

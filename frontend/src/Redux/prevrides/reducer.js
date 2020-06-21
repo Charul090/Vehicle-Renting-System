@@ -1,4 +1,4 @@
-import {Change_Page,Ride_Query,Ride_Query_Successfull,Ride_Query_Failure} from "./actiontypes.js"
+import {Ride_Query,Ride_Query_Successfull,Ride_Query_Failure,Change_Page,SEND_TRANSACTION_QUERY,TRANSACTION_QUERY_SUCCESSFULL,TRANSACTION_QUERY_FAILURE} from "./actiontypes.js"
 
 
 const initialState = {
@@ -30,6 +30,21 @@ export default (state = initialState, { type, payload }) => {
             data:{}
         }
     }
+
+    case SEND_TRANSACTION_QUERY:
+        return { ...state}
+        
+    case TRANSACTION_QUERY_SUCCESSFULL:
+        return {
+            ...state,
+            data:payload
+        }
+        
+    case TRANSACTION_QUERY_FAILURE:
+        return{
+            ...state,
+            data:{}
+        }
 
     default:
         return {...state}

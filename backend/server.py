@@ -431,6 +431,7 @@ def dashboardInfo():
 @app.route("/alltransactions")
 def getallTransactions():
     page=request.args.get("page",default=1,type=int)
+    per_page=request.args.get("per_page",default=10,type=int)
 
     cur=mysql.connection.cursor()
     cur.execute(''' SELECT c.car_name,c.car_make,l1.location,l2.location,uc.time,uc.id FROM user_car as uc JOIN car as c ON uc.car_id=c.id JOIN location as l1 ON uc.start=l1.id JOIN location as l2 ON uc.destination=l2.id ORDER BY uc.time DESC;''')
@@ -450,7 +451,7 @@ def getallTransactions():
         data.append(obj)
     
     total=len(data)
-    page_info=Pagination(page,10,total)
+    page_info=Pagination(page,per_page,total)
 
     data=data[page_info[1]:page_info[2]]
 

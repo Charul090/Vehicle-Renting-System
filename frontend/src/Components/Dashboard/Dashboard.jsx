@@ -16,15 +16,15 @@ export default function Dashboard() {
 
     if (logged_in && admin) {
         return (
-            <Container className={`${!deviceWidth?"h-100":null} background-dashboard`} fluid>
+            <Container className={`${!deviceWidth?"min-vh-100":null} background-dashboard`} fluid>
                 <Row className="h-100">
                     {
                         deviceWidth?null:
-                        <Col md={3} className="p-0 h-100">
+                        <Col md={3} className="p-0 vh-100">
                         <SideBar />
                     </Col>
                     }
-                    <Col xs={12} md={9} className="p-0">
+                    <Col xs={12} md={9} className="p-0 vh-100 y-scroll">
                         <DashBoardHeader />
                         <DashBoardRoutes />
                     </Col>

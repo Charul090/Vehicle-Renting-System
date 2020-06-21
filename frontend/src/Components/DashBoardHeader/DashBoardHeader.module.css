@@ -1,4 +1,7 @@
-.header{
-    width:100%;
-    border-bottom: 1px solid lightgray;
+.header {
+    width: 100%;
+    border-bottom: 1px solid #E0E0E0;
+    -webkit-box-shadow: 0px 0.5px 15px 0px rgba(199, 199, 199, 0.24);
+    -moz-box-shadow: 0px 0.5px 15px 0px rgba(199, 199, 199, 0.24);
+    box-shadow: 0px 0.5px 15px 0px rgba(199, 199, 199, 0.24);
 }
